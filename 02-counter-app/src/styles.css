@@ -1,0 +1,31 @@
+html, body {
+  background-color: #21232A;
+  color: white;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 1.3rem;
+  margin: 0;
+  padding: 70px;
+}
+
+button {
+  padding: 30;
+  width: 60px;
+  height: 60px;
+  font-size: 1.3rem;
+  background-color: #1D78D2;
+  color: white;
+  border-radius: 35px;
+  border: solid 1px white;
+}
+
+button:hover {
+  color: #1D78D2;
+  background-color: white;
+  border: solid 1px #1D78D2;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
