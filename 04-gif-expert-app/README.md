@@ -13,3 +13,7 @@
     If we are using: ```npm install --save-dev whatwg-fetch```
     In package.json scrips => "test": "jest --watchAll"
     Babel Config File, jest.config.cjs and jest.setup.cjs: see that file in this app
+
+# Sugerencias
+
+1. Empezar por el componente que menos dependencias tenga o mas pequenio sea, en este caso seria el GifGridItem.jsx o gifs.service.ts
