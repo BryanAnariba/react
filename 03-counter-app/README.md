@@ -1,8 +1,12 @@
-# React + Vite
+# For testing but in react in vanila JS
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+#### Jest Documentation: ```https://jestjs.io/docs/getting-started```
+- 1. Install jest package: ```npm install --save-dev jest```
+- 2. Install types for intellisence: ```npm install @types/jest```
+- 3. In package.lock.json copy this: ```{"scripts": {"test": "jest"}} or {"scripts": {"test": "jest --watchAll"}}```
+- 4. Install babel: ```npm install --save-dev babel-jest @babel/core @babel/preset-env```
+- 5. Create babel.config.cjs and set the content: ```module.exports = {presets: [['@babel/preset-env', {targets: {node: 'current'}}]],};```
+- 6. Create __test__ folder and set the tests there
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Run test
+```npm run test```
