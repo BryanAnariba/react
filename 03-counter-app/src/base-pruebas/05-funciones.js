@@ -5,7 +5,7 @@ export const getUser = () => ({
 
 
 const user = getUser();
-console.log(user);
+// console.log(user);
 
 // Tarea
 export const getUsuarioActivo = (nombre) => ({
@@ -14,4 +14,4 @@ export const getUsuarioActivo = (nombre) => ({
 })
 
 const usuarioActivo = getUsuarioActivo('Fernando');
-console.log(usuarioActivo);
+// console.log(usuarioActivo);
