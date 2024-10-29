@@ -4,7 +4,7 @@ interface Props {
   url: string;
 }
 
-export const GifGridItem = ({ id, title, url }: Props) => {
+export const GifGridItem = ({ id, title, url }: Props): JSX.Element => {
   return (
     <li className="card">
       <p>

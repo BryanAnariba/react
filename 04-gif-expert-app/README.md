@@ -1,50 +1,23 @@
-# React + TypeScript + Vite
+### Necesary Packages for testing in jest!
+- ```npm i --save-dev @babel/preset-typescript```
+- ```npm i --save-dev ts-jest```
+- ```npm i --save-dev babel-jest```
+- ```npm i --save-dev @types/jest```
+- ```npm i --save-dev @jest/globals```
+- ```npm i --save-dev @types/jest whatwg-fetch```
+- ```npm i --save-dev @babel/core```
+- ```npm i --save-dev @babel/preset-env```
+- ```npm i --save-dev```
+- ```npm i --save-dev```
+- ```jest-environment-jsdom```
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### Packages for testing library!
+- ```npm install --save-dev @testing-library/react @testing-library/dom @types/react @types/react-dom```
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
-
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+### Settings
+- Create __babe.config.js__ and copy the content of this one
+- Copy the override script and paste on file __eslint.config.js__
+- For node -18 create __jest.setup.js__ and copy the content of this file in the other one 
+- In __package.lock.json__ scrips zone copy this: ```"test": "jest --watchAll"```
+- Run: ```npm run test```
+- Copy this in __tsconfig.json__: ```"compilerOptions": {"allowSyntheticDefaultImports": true, "esModuleInterop": true, "jsx": "react-jsx"},```
