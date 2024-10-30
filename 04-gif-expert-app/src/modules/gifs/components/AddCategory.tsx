@@ -16,6 +16,7 @@ export const AddCategory = ({ name, id, placeholder, onReceiveCategory }: Props)
 
   const handleSubmit = (e: React.FormEvent): void => {
     e.preventDefault();
+    console.log('======> handle submit executed from AddCategory.test.tsx <======');
     if (inputValue.trim().length !== 0) {
       onReceiveCategory(inputValue.trim().toUpperCase()); // Este es de salida se emite al padre cuando se de enter, peculiar
       setInputValue('');
@@ -23,7 +24,7 @@ export const AddCategory = ({ name, id, placeholder, onReceiveCategory }: Props)
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} aria-label="form">
       <input type="text" name={name} id={id} placeholder={placeholder} value={inputValue} onChange={onInputChange} />
     </form>
   )

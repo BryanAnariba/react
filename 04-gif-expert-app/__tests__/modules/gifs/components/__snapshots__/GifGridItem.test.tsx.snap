@@ -6,13 +6,11 @@ exports[`Testing in ./src/modules/gifs/components/GifGridItem.tsx Should to be m
     class="card"
   >
     <p>
-      123
-       - 
-      Test title
+      One Punch Saitama GIF by Crunchyroll
     </p>
     <img
-      alt="Image Test title"
-      src="Test url"
+      alt="Image lrDAgsYq0eomhwoESZ"
+      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYnOe5Vwys8zJ6Jd7w3i4hqC9voox36N68nw&s"
     />
   </li>
 </div>

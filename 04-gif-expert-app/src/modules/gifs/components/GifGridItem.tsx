@@ -8,9 +8,9 @@ export const GifGridItem = ({ id, title, url }: Props): JSX.Element => {
   return (
     <li className="card">
       <p>
-        {id} - {title}
+        {title}
       </p>
-      <img src={url} alt={'Image ' + title} />
+      <img src={url} alt={'Image ' + id} />
     </li>
   )
 }
