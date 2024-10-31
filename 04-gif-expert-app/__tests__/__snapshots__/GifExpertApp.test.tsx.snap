@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing in ./src/GifExpertApp.ts Should to be match with the snapshot 1`] = `
+<div>
+  <h1>
+    Gif Expert App
+  </h1>
+  <form
+    aria-label="form"
+  >
+    <input
+      id="category"
+      name="category"
+      placeholder="Write Category"
+      type="text"
+      value=""
+    />
+  </form>
+  <ol />
+</div>
+`;

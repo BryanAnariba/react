@@ -1,6 +1,6 @@
 import { Giphy, GiphyReponse } from "../interfaces";
 
-const apiKey: string = '7vNNzTxYeDVCZff94205x1wCdb4DWQPS';
+const apiKey: string = 'your key here';
 
 export const getGifs = async (category: string): Promise<GiphyReponse[]> => {
   try {
