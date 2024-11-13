@@ -1,4 +1,4 @@
-import { useCounter } from "../hooks/useCounter";
+import { useCounter } from "../hooks";
 
 export const CounterWithCustomHook = (): JSX.Element => {
   const { counter, handleCounter } = useCounter(10);

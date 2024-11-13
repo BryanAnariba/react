@@ -5,7 +5,7 @@ interface UseCounter {
     handleCounter: (option: string, quantity?: number) => void;
 }
 
-export const useCounter = (initialValue: number = 10): UseCounter => {
+export const useCounter = (initialValue: number = 1): UseCounter => {
   const [counter, setCounter] = useState<number>(initialValue);
 
   const handleCounter = (option: string, quantity: number = 1): void => {
