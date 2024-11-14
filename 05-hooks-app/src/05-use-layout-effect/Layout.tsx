@@ -1,7 +1,7 @@
+import { LoadingMessage } from "../03-examples/LoadingMessage";
+import { PokemonCard } from "../03-examples/PokemonCard";
 import { useCounter } from "../hooks";
 import { useFetch } from "../hooks/useFetch"
-import { LoadingMessage } from "./LoadingMessage";
-import { PokemonCard } from "./PokemonCard";
 
 export const MultipleCustomHooks = (): JSX.Element => {
 
@@ -37,3 +37,4 @@ export const MultipleCustomHooks = (): JSX.Element => {
     </>
   )
 }
+
