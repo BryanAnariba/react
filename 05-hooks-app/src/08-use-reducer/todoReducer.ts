@@ -1,20 +1,23 @@
+import { TodoActionType } from "./enums";
+import { Action, Todo } from "./interfaces";
 
-export interface InitialState {
-  id: string;
-  description: string;
-  done: boolean;
-}
-
-export interface Action {
-  type: string;
-  payload: any;
-}
-
-export const todoReducer = (initialState: InitialState[] = [], action: Action) => {
+export const todoReducer = (state: Todo[] = [], action: Action) => {
   switch (action.type) {
-    case 'ABC':
-      throw new Error('Action.type ' + action.type + ' not implemented yet.');
+    case TodoActionType.CREATE:
+      return [...state, action.payload];
+    case TodoActionType.REMOVE:
+      return state.filter(todo => todo.id !== action.payload.id);
+    case TodoActionType.MARK_AS_DONE:
+      return state.map(todo => {
+        if (todo.id === action.payload.id) {
+          return {
+            ...todo,
+            done: !todo.done,
+          }
+        }
+        return todo;
+      });
     default:
-      return initialState;
+      return state;
   }
 }

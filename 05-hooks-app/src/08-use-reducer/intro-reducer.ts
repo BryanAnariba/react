@@ -25,6 +25,7 @@ const todoActions: Actions = {
   type: 'CREATE',
   payload: newTodo,
 }
+
 const todos = todoReducer(initialState, todoActions);
 
 // Agregamos un todo nuevo

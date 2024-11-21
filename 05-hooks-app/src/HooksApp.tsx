@@ -8,8 +8,9 @@
 // import { MemorizeHook } from "./06-memorize/MemorizeHook";
 // import { UseCallbackHook } from "./06-memorize/UseCallbackHook";
 // import { Padre } from "./07-tarea-memo/Padre";
-import './08-use-reducer/intro-reducer';
-import { TodoApp } from './08-use-reducer/TodoApp';
+// import './08-use-reducer/intro-reducer';
+ import { TodoApp } from './08-use-reducer/TodoApp';
+
 
 export const HooksApp = (): JSX.Element => {
   return (

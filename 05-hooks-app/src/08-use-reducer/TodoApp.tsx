@@ -1,33 +1,26 @@
-import { useReducer } from "react";
-import { InitialState, todoReducer } from "./todoReducer";
+import { TodoList } from "./components/TodoList";
+import { TodoForm } from "./components/TodoForm";
+import { useTodos } from "./hooks";
 
 
 
-const initialState: InitialState[] = [
-  {
-    id: new Date().getTime().toString(),
-    description: 'Recolectar la piedra del alma',
-    done: false,
-  },
-  {
-    id: new Date().getTime().toString(),
-    description: 'Recolectar la piedra del doctor strange',
-    done: false,
-  },
-]
+export const TodoApp = (): JSX.Element => {
+  const { doneTodos, allTodos, todos, handleDeleteTodo, onHandleDoneTodo, onSendNewTodoToTodoApp } = useTodos();
 
-
-export const TodoApp = () => {
-  const [todos, dispatchTodo] = useReducer(todoReducer, initialState);
   return (
     <>
-      <h1>Todo App</h1>
       <hr />
-      <ul>
-        <li>Item One</li>
-        <li>Item Two</li>
-        <li>Item Three</li>
-      </ul>
+      <div className="container">
+        <div className="row">
+          <div className="col-lg-7 col-sm-12">
+            <h1>Todos App <small>Total: ({allTodos})</small><small>Pending: ({doneTodos})</small></h1>
+            <TodoList todos={todos} onDeleteTodo={handleDeleteTodo} onToggleTodo={onHandleDoneTodo} />
+          </div>
+          <div className="col-lg-5 col-sm-12">
+            <TodoForm onSendNewTodoToTodoApp={onSendNewTodoToTodoApp} />
+          </div>
+        </div>
+      </div>
     </>
   )
 }
