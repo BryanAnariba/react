@@ -1,8 +1,8 @@
 import { useState } from "react";
 
 interface UseCounter {
-    counter: number;
-    handleCounter: (option: string, quantity?: number) => void;
+  counter: number;
+  handleCounter: (option: string, quantity?: number) => void;
 }
 
 export const useCounter = (initialValue: number = 1): UseCounter => {
