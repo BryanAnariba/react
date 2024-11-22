@@ -2,8 +2,6 @@ import { TodoList } from "./components/TodoList";
 import { TodoForm } from "./components/TodoForm";
 import { useTodos } from "./hooks";
 
-
-
 export const TodoApp = (): JSX.Element => {
   const { doneTodos, allTodos, todos, handleDeleteTodo, onHandleDoneTodo, onSendNewTodoToTodoApp } = useTodos();
 

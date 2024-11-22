@@ -7,6 +7,6 @@ export interface Todo {
 }
 
 export interface Action {
-  type: TodoActionType;
   payload: Todo;
+  type: TodoActionType;
 }
