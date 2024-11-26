@@ -1,0 +1,1 @@
+export * from './environment-vars.interface';
