@@ -1,7 +1,10 @@
+import { AppRouter, AppTheme } from "./common";
+
+
 export const JournalApp = (): JSX.Element => {
   return (
-    <>
-      <h1>Hello world!</h1>
-    </>
-  )
-}
+    <AppTheme>
+      <AppRouter />
+    </AppTheme>
+  );
+};
