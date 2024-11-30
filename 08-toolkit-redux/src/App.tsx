@@ -1,11 +1,10 @@
-import reactLogo from './assets/react.svg';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from './store';
-import './App.css'
-import { decrement, increment, incrementByAmount } from './store/slices';
+import reactLogo from "./assets/react.svg";
+import { useDispatch, useSelector } from "react-redux";
+import { decrement, increment, incrementBy, RootState } from "./store";
+import "./App.css";
 
-function App() {
-  const { counter } = useSelector((state: RootState) => state.counter);
+function App(): JSX.Element {
+  const counter = useSelector((state: RootState) => state.counter.counter);
   const dispatch = useDispatch();
 
   return (
@@ -17,18 +16,18 @@ function App() {
       </div>
       <h1>{counter}</h1>
       <div className="card">
-        <button onClick={() => dispatch(increment())}>
-          Increment
+        <button onClick={() => dispatch(increment())} style={{marginLeft: 5}}>
+          + 1
         </button>
-        <button onClick={() => dispatch(decrement())}>
-          Decrement
+        <button onClick={() => dispatch(decrement())} style={{marginLeft: 5}}>
+          - 1
         </button>
-        <button onClick={() => dispatch(incrementByAmount(2))}>
-          Increment by 2
+        <button onClick={() => dispatch(incrementBy(2))} style={{marginLeft: 5}}>
+          + 2
         </button>
       </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

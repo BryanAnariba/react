@@ -1,2 +1,1 @@
-# React + TypeScript + Vite
-- [REDUX TOOLKIT](https://redux-toolkit.js.org/introduction/getting-started)
+- [Link to redux:](https://redux-toolkit.js.org/introduction/getting-started)
