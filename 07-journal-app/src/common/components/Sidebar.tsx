@@ -1,11 +1,17 @@
-import { TurnedInNot } from "@mui/icons-material";
-import { Box, Divider, Drawer, Grid, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar, Typography } from "@mui/material";
+import { Box, Divider, Drawer, List, Toolbar, Typography } from "@mui/material";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
+import { SidebarItem } from "./SidebarItem";
 
 interface SidebarProps {
   drawerWidth: number;
 }
 
 export const Sidebar = ({ drawerWidth }: SidebarProps): JSX.Element => {
+
+  const { displayName } = useSelector((state: RootState) => state.auth);
+  const { notes } = useSelector((state: RootState) => state.journal);
+
   return (
     <Box
       component={"nav"}
@@ -24,24 +30,14 @@ export const Sidebar = ({ drawerWidth }: SidebarProps): JSX.Element => {
       >
         <Toolbar>
           <Typography variant="h6" noWrap component={"div"}>
-            Welcome Gohan!
+            Welcome {displayName}!
           </Typography>
         </Toolbar>
         <Divider />
         <List>
           {
-            ['January', 'February', 'March', 'April', 'June', 'July'].map(month => (
-              <ListItem key={month}>
-                <ListItemButton>
-                  <ListItemIcon>
-                    <TurnedInNot />
-                  </ListItemIcon>
-                  <Grid container alignItems={'center'}>
-                    <ListItemText primary={month}></ListItemText>
-                    <ListItemText secondary={'View data here!!!.'}></ListItemText>
-                  </Grid>
-                </ListItemButton>
-              </ListItem>
+            notes.map(note => (
+              <SidebarItem note={note} key={note.id} />
             ))
           }
         </List>

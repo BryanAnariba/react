@@ -25,7 +25,7 @@ export const AuthLayout = ({
         sx={{ width: {sm: 450}, backgroundColor: "white", padding: 3, borderRadius: 2 }}
       >
         <Typography variant="h5" sx={{ mb: 2 }}>
-          {title.toUpperCase()}
+          {title}
         </Typography>
         {children}
       </Grid>

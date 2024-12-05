@@ -9,7 +9,7 @@ const drawerWith: number = 300;
 
 const JournalLayout = ({ children }: JournalLayoutProps): JSX.Element => {
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex" }} className="animate__animated animate__fadeIn">
       <Navbar drawerWidth={drawerWith} />
       <Sidebar drawerWidth={drawerWith} />
       <Box component={"main"} sx={{ flexGrow: 1, p: 1 }}>
