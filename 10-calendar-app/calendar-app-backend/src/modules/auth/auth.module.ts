@@ -18,6 +18,6 @@ import { envs } from 'src/common/config';
   ],
   controllers: [AuthController],
   providers: [AuthService],
-  exports: [JwtModule]
+  exports: [AuthService],
 })
-export class AuthModule { }
+export class AuthModule {}
