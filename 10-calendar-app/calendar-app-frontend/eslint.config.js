@@ -19,6 +19,7 @@ export default tseslint.config(
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
+      "@typescript-eslint/no-explicit-any": "off", // PARA LAS ANY ES QUE QUE VERSH CONE STO
       'react-refresh/only-export-components': [
         'warn',
         { allowConstantExport: true },

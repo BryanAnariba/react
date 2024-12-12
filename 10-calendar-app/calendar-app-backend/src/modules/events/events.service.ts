@@ -1,26 +1,72 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateEventDto } from './dto/create-event.dto';
 import { UpdateEventDto } from './dto/update-event.dto';
+import { User } from '../users/schemas/user.schema';
+import { InjectModel } from '@nestjs/mongoose';
+import { Event } from './schemas/event.entity';
+import { Model } from 'mongoose';
 
 @Injectable()
 export class EventsService {
-  create(createEventDto: CreateEventDto) {
-    return 'This action adds a new event';
+
+  constructor (
+    @InjectModel(Event.name)
+    private readonly eventsModel: Model<Event>
+  ) {}
+
+  async create(createEventDto: CreateEventDto, loggedUser: User): Promise<Event> {
+    try {
+      const event = await this.eventsModel.create({...createEventDto, user: loggedUser._id});
+      const saved = await event.save();
+      return saved;
+    } catch (error) {
+      if (error instanceof HttpException) throw error;
+      throw new HttpException(`Sometie went wrong creating the event: ${error}`, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
-  findAll() {
-    return `This action returns all events`;
+  async findAll(user: User): Promise<Event[]> {
+    try {
+      return await this.eventsModel.find({isActive: true, user: user._id}).populate('user', 'name email');
+    } catch (error) {
+      if (error instanceof HttpException) throw error;
+      throw new HttpException(`Sometime went wrong getting users: ${error}`, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} event`;
+  async findOne(id: string): Promise<Event> {
+    try {
+      const event = await this.eventsModel.findOne({isActive: true, _id: id}).populate('user', 'name email');
+      if (!event) throw new HttpException(`Event deleted or not found`, HttpStatus.BAD_REQUEST);
+      return event;
+    } catch (error) {
+      if (error instanceof HttpException) throw error;
+      throw new HttpException(`Sometime went wrong getting users: ${error}`, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
-  update(id: number, updateEventDto: UpdateEventDto) {
-    return `This action updates a #${id} event`;
+  async update(id: string, updateEventDto: UpdateEventDto,  user: User): Promise<Event> {
+    try {
+      const event = await this.findOne(id);
+      if (event.user['_id'].toString() !== user._id) throw new HttpException(`This event does not belong to you`, HttpStatus.UNAUTHORIZED);
+      const updated = await this.eventsModel.findOneAndUpdate({_id: id}, { ...updateEventDto }, { new: true });
+      return updated;
+    } catch (error) {
+      if (error instanceof HttpException) throw error;
+      throw new HttpException(`Sometime went wrong getting users: ${error}`, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} event`;
+  async remove(id: string, user: User):  Promise<Event> {
+    try {
+      const event = await this.findOne(id);
+      // console.log({user: event.user['_id'].toString(), id: user._id})
+      if (event.user['_id'].toString() !== user._id) throw new HttpException(`This event does not belong to you`, HttpStatus.UNAUTHORIZED);
+      const deleted = await this.eventsModel.findOneAndUpdate({_id: id}, { isActive: (event.isActive === true) ?  false : true }, { new: true });
+      return deleted;
+    } catch (error) {
+      if (error instanceof HttpException) throw error;
+      throw new HttpException(`Sometime went wrong getting users: ${error}`, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 }

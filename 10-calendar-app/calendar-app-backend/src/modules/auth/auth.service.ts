@@ -5,7 +5,7 @@ import { User } from '../users/schemas/user.schema';
 import { Model } from 'mongoose';
 import { compareParams, encrypt, envs } from 'src/common/config';
 import { JwtService } from '@nestjs/jwt';
-import { JWTPayload } from './interfaces';
+import { AuthResponse, JWTPayload } from './interfaces';
 
 @Injectable()
 export class AuthService {
@@ -16,7 +16,7 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) { }
 
-  public async signUp(signUpDto: SignUpDto) {
+  public async signUp(signUpDto: SignUpDto): Promise<AuthResponse> {
     try {
       const user = await this.userModel.create({
         ...signUpDto,
@@ -25,7 +25,11 @@ export class AuthService {
       const saved = await user.save();
       const { password: _, ...restOfUser } = saved.toJSON();
       return {
-        user: restOfUser,
+        user: {
+          _id: restOfUser._id.toString(),
+          name: restOfUser.name,
+          email: restOfUser.email,
+        },
         token: this.setJwt({ _id: `${restOfUser._id}`, name: restOfUser.name, email: restOfUser.email }),
       }
     } catch (error) {
@@ -35,7 +39,7 @@ export class AuthService {
     }
   }
 
-  public async signIn(signInDto: SignInDto) {
+  public async signIn(signInDto: SignInDto): Promise<AuthResponse> {
     try {
       const user = await this.userModel.findOne({ email: signInDto.email });
       if (!user) throw new HttpException(`Not valid credentials - email`, HttpStatus.UNAUTHORIZED);
@@ -43,7 +47,11 @@ export class AuthService {
       if (!compareParams(signInDto.password, user.password)) throw new HttpException(`Not valid credentials - password`, HttpStatus.UNAUTHORIZED);
       const { password: _, ...restOfUser } = user.toJSON();
       return {
-        user: restOfUser,
+        user: {
+          _id: restOfUser._id.toString(),
+          name: restOfUser.name,
+          email: restOfUser.email,
+        },
         token: this.setJwt({ _id: `${restOfUser._id}`, name: restOfUser.name, email: restOfUser.email }),
       }
     } catch (error) {

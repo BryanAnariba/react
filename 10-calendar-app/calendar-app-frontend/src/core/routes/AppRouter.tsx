@@ -4,7 +4,7 @@ import { CalendarPage } from "../../modules/calendar";
 import { Navigate } from "react-router";
 
 export const AppRouter = (): JSX.Element => {
-  const authStatus = AuthStatus.AUTHENTICATED;
+  const authStatus = AuthStatus.NOT_AUTHENTICATED;
 
   return (
     <Routes>

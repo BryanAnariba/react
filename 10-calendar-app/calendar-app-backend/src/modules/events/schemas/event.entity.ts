@@ -16,7 +16,7 @@ export class Event extends Document {
     @Prop({ required: [true, 'Field end date is required']})
     public end: Date;
 
-    @Prop({ required: [true, 'Field user is required'], ref: 'User', type: mongoose.Schema.Types.ObjectId})
+    @Prop({ required: [true, 'Field user is required'], ref: 'User', type: mongoose.Schema.Types.ObjectId, unique: false})
     public user: string;
 
     @Prop({ required: [true, 'Field bgColor is required']})
