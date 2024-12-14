@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { clearErrorMessage, onChecking, onLogin, onLogout, onSignUp, RootState } from "../store";
 import { SignInRequest } from "../../modules/auth/interfaces";
-import { calendarApi } from "../api";
+import calendarApp from '../api/calendar-app.api';
 import { AuthResponse, SignUpRequest } from '../../modules/auth/interfaces/auth.interface';
 
 export const useAuthStore = () => {
@@ -14,7 +14,7 @@ export const useAuthStore = () => {
     // console.log('startSignIn: ', signInForm);
     try {
         dispatch(onChecking());
-        const response = await calendarApi.calendarApp.post('/auth/sign-in', signInForm);
+        const response = await calendarApp.post('/auth/sign-in', signInForm);
         const data: AuthResponse = response.data;    
         setTokenInLocalStorage(data.token);
         dispatch(onLogin(data));
@@ -31,9 +31,9 @@ export const useAuthStore = () => {
     console.log('startSignUp: ', signUpForm);
     try {
         dispatch(onChecking());
-        const response = await calendarApi.calendarApp.post('/auth/sign-up', signUpForm);
+        const response = await calendarApp.post('/auth/sign-up', signUpForm);
         const data:AuthResponse = response.data;
-        // console.log(response.data);        
+        // console.log(response.data);   
         setTokenInLocalStorage(data.token);
         dispatch(onSignUp(data));
     } catch (error: any) {
@@ -43,6 +43,29 @@ export const useAuthStore = () => {
         }, 5000);
         throw error;
     }
+  }
+
+  const startCheckAuthToken = async () => {
+    const token = localStorage.getItem('token');
+    if (!token) return dispatch(onLogout(''));
+    try {
+      const response = await calendarApp.get('/auth/refresh-jwt');
+      const data: AuthResponse = response.data;
+      setTokenInLocalStorage(data.token);
+      console.log('Veryfing jwt and refreshing: ', data);
+      dispatch(onLogin(data));
+    } catch (error: any) {
+      dispatch(onLogout(''));
+      // setTimeout(() => {
+      //   dispatch(clearErrorMessage());
+      // }, 5000);
+      throw error;
+    }
+  }
+
+  const startLogout = () => {
+    localStorage.clear();
+    dispatch(onLogout(''));
   }
 
   const setTokenInLocalStorage = (token: string): void => {
@@ -56,5 +79,7 @@ export const useAuthStore = () => {
     errorMessage,
     startSignIn,
     startSignUp,
+    startCheckAuthToken,
+    startLogout,
   };
 };

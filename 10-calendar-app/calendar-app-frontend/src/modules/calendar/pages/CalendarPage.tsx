@@ -3,21 +3,25 @@ import { localizer, Navbar } from "../../../shared";
 
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { CalendarEvent, FabAddNew, FabDelete } from '../components';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CalendarModal } from '../components/CalendarModal';
-import { useCalendarStore, useUiStore } from '../../../core';
+import { useAuthStore, useCalendarStore, useUiStore } from '../../../core';
 import { Events } from '../../../core/store/calendar/calendarSlice';
 
 export const CalendarPage = (): JSX.Element => {
 
+  const {user} = useAuthStore();
   const { openDateModal } = useUiStore();
-  const { events, handleSetActiveEvent } = useCalendarStore();
-  const [ lastView, setLastView ] = useState<View>(localStorage.getItem('lastView') ? localStorage.getItem('lastView') as View : "week");
+  const { events, handleSetActiveEvent, startLoadingEvents } = useCalendarStore();
+  const [ lastView, setLastView ] = useState<View>(localStorage.getItem('lastView') ? localStorage.getItem('lastView') as View : "week")
 
-  const eventStyleGetter = (event: Object, start: Date, end: Date, isSelected: boolean) => {
+  const eventStyleGetter = (event: Events, start: Date, end: Date, isSelected: boolean) => {
     // console.log({event, start, end, isSelected});
+
+    const isMyEvent = user!._id === event.user._id;
+
     const style = {
-      backgroundColor: '#347cf7',
+      backgroundColor: isMyEvent ? '#347cf7' : '#465660',
       borderRadius: '0px',
       opacity: 0.8,
       color: 'white',
@@ -43,6 +47,10 @@ export const CalendarPage = (): JSX.Element => {
     localStorage.setItem('lastView', view);
     console.log({lastView: view})
   }
+
+  useEffect(() => {
+    startLoadingEvents();
+  }, []);
 
   return (
     <>

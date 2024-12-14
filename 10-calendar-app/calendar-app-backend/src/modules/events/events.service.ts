@@ -27,7 +27,8 @@ export class EventsService {
 
   async findAll(user: User): Promise<Event[]> {
     try {
-      return await this.eventsModel.find({isActive: true, user: user._id}).populate('user', 'name email');
+      // user: user._id
+      return await this.eventsModel.find({isActive: true}).populate('user', 'name email');
     } catch (error) {
       if (error instanceof HttpException) throw error;
       throw new HttpException(`Sometime went wrong getting users: ${error}`, HttpStatus.INTERNAL_SERVER_ERROR);

@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { addHours } from "date-fns";
 
 export interface CalendarSlice {
+  isLoadingEvents: boolean;
   events: Events[];
   activeEvent: Events | null;
 }
@@ -22,20 +22,8 @@ export interface LoggedUser {
 }
 
 const initialState: CalendarSlice = {
-  events: [
-    {
-      _id: new Date().getTime().toString(),
-      title: 'Birthday',
-      notes: 'Buy a cake ON 24 December',
-      start: new Date(),
-      end: addHours(new Date(), 2),
-      user: {
-        _id: 'adsdadas',
-        name: 'Maria'
-      },
-      bgColor: '#fafafa',
-    }
-  ],
+  isLoadingEvents: false,
+  events: [],
   activeEvent: null,
 }
 
@@ -63,8 +51,19 @@ export const calendarSlice = createSlice({
         state.events = state.events.filter((event) => event._id !== state.activeEvent?._id);
         state.activeEvent = null;
       }
+    },
+    onLoadEvents: (state, action: PayloadAction<Events[]>) => {
+      state.isLoadingEvents = false;
+      // console.log('onLoadEvents: ', action.payload)
+      action.payload.forEach(dbEvent => {
+        // console.log('onLoadEvents', dbEvent)
+        const existEvent = state.events.some(event => event._id === dbEvent._id);
+        if (!existEvent) {
+          state.events.push(dbEvent);
+        }
+      });
     }
   },
 });
 
-export const { onSetActiveEvent, onAddNewEvent, onUpdateEvent, onDeleteEvent } = calendarSlice.actions;
+export const { onSetActiveEvent, onAddNewEvent, onUpdateEvent, onDeleteEvent, onLoadEvents } = calendarSlice.actions;
