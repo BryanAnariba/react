@@ -14,7 +14,9 @@ import Swal from "sweetalert2";
 
 export const useCalendarStore = () => {
   const dispatch = useDispatch();
+  
   const { user } = useSelector((state: RootState) => state.auth);
+  const { events, activeEvent } = useSelector((state: RootState) => state.calendar);
 
   const handleSetActiveEvent = (activeEvent: Events) => {
     dispatch(onSetActiveEvent(activeEvent));
@@ -46,12 +48,10 @@ export const useCalendarStore = () => {
   }
 
   const startDeleteEvent = async () => {
+    await calendarApp.delete("/events/" + activeEvent?._id);
     dispatch(onDeleteEvent());
   };
 
-  const { events, activeEvent } = useSelector(
-    (state: RootState) => state.calendar
-  );
   return {
     events,
     activeEvent,

@@ -3,6 +3,7 @@ import { clearErrorMessage, onChecking, onLogin, onLogout, onSignUp, RootState }
 import { SignInRequest } from "../../modules/auth/interfaces";
 import calendarApp from '../api/calendar-app.api';
 import { AuthResponse, SignUpRequest } from '../../modules/auth/interfaces/auth.interface';
+import { onLogoutCalendar } from "../store/calendar/calendarSlice";
 
 export const useAuthStore = () => {
   const dispatch = useDispatch();
@@ -66,6 +67,7 @@ export const useAuthStore = () => {
   const startLogout = () => {
     localStorage.clear();
     dispatch(onLogout(''));
+    dispatch(onLogoutCalendar());
   }
 
   const setTokenInLocalStorage = (token: string): void => {

@@ -21,7 +21,7 @@ export interface LoggedUser {
   name: string;
 }
 
-const initialState: CalendarSlice = {
+const calendarInitialState: CalendarSlice = {
   isLoadingEvents: false,
   events: [],
   activeEvent: null,
@@ -29,7 +29,7 @@ const initialState: CalendarSlice = {
 
 export const calendarSlice = createSlice({
   name: 'calendar',
-  initialState: initialState,
+  initialState: calendarInitialState,
   reducers: {
     onSetActiveEvent: (state, action: PayloadAction<Events>) => {
       state.activeEvent = action.payload;
@@ -62,8 +62,20 @@ export const calendarSlice = createSlice({
           state.events.push(dbEvent);
         }
       });
-    }
+    },
+    onLogoutCalendar: (state) => {
+      state.activeEvent = calendarInitialState.activeEvent;
+      state.events = calendarInitialState.events;
+      state.isLoadingEvents = calendarInitialState.isLoadingEvents
+    },
   },
 });
 
-export const { onSetActiveEvent, onAddNewEvent, onUpdateEvent, onDeleteEvent, onLoadEvents } = calendarSlice.actions;
+export const { 
+  onSetActiveEvent, 
+  onAddNewEvent, 
+  onUpdateEvent, 
+  onDeleteEvent,
+  onLoadEvents,
+  onLogoutCalendar,
+} = calendarSlice.actions;
