@@ -4,9 +4,9 @@ import { User } from '../users/schemas/user.schema';
 import { Model } from 'mongoose';
 import { SignInDto, SignUpDto } from './dtos';
 import { handleException } from 'src/common/exceptions';
-import { encrypt, envVariables, isMatch } from 'src/core/config';
 import { AuthResponse, JwtPayload } from './interfaces';
 import { JwtService } from '@nestjs/jwt';
+import { encrypt, envVariables, isMatch } from '../core/config';
 
 @Injectable()
 export class AuthService {
