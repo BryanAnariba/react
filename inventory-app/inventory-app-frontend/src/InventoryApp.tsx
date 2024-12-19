@@ -1,11 +1,15 @@
 import { Provider } from 'react-redux';
 import './App.css';
 import { store } from './store';
+import { BrowserRouter } from 'react-router';
+import { AppRouter } from './router/AppRouter';
 
 function InventoryApp (): JSX.Element {
   return (
     <Provider store={store}>
-      <span>App Works!!!</span>
+      <BrowserRouter>
+        <AppRouter />
+      </BrowserRouter>
     </Provider>
   )
 }
