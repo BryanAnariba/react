@@ -1,11 +1,18 @@
+import { useSelector } from "react-redux"
+import { RootState } from "../../../store"
+import { Link } from "react-router";
+
 export const Sidebar = (): JSX.Element => {
+
+  const { loggedUser } = useSelector((rootState: RootState) => rootState.authSlice);
+
   return (
     <ul className="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
       <a className="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
         <div className="sidebar-brand-icon rotate-n-15">
           <i className="fas fa-laugh-wink"></i>
         </div>
-        <div className="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+        <div className="sidebar-brand-text mx-3">Inventory App <sup>2</sup></div>
       </a>
 
       <hr className="sidebar-divider my-0" />
@@ -19,14 +26,14 @@ export const Sidebar = (): JSX.Element => {
       <hr className="sidebar-divider" />
 
       <div className="sidebar-heading">
-        Interface
+        Profile Settings
       </div>
 
       <li className="nav-item">
         <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
           aria-expanded="true" aria-controls="collapseTwo">
           <i className="fas fa-fw fa-cog"></i>
-          <span>Components</span>
+          <span>Account</span>
         </a>
         <div id="collapseTwo" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div className="bg-white py-2 collapse-inner rounded">
@@ -58,7 +65,7 @@ export const Sidebar = (): JSX.Element => {
       <hr className="sidebar-divider" />
 
       <div className="sidebar-heading">
-        Addons
+        Dashboard
       </div>
 
       <li className="nav-item">
@@ -82,16 +89,29 @@ export const Sidebar = (): JSX.Element => {
       </li>
 
       <li className="nav-item">
-        <a className="nav-link" href="charts.html">
-          <i className="fas fa-fw fa-chart-area"></i>
-          <span>Charts</span></a>
+        <Link className="nav-link" to={'/products/list'}>
+          <i className="fas fa-fw fa-table"></i>
+          <span>Products</span></Link>
       </li>
 
-      <li className="nav-item">
-        <a className="nav-link" href="tables.html">
-          <i className="fas fa-fw fa-table"></i>
-          <span>Tables</span></a>
-      </li>
+      {
+        (loggedUser?.role.name === 'ADMIN' || loggedUser?.role.name === 'DEVELOPER')
+        &&
+        (
+          <>
+            <li className="nav-item">
+              <Link className="nav-link" to={'/roles/list'}>
+                <i className="fas fa-fw fa-chart-area"></i>
+                <span>Roles</span></Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to={'/users/list'}>
+                <i className="fas fa-fw fa-chart-area"></i>
+                <span>Users</span></Link>
+            </li>
+          </>
+        )
+      }
 
       <hr className="sidebar-divider d-none d-md-block" />
 

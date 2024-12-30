@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AuthStatus } from "../../modules/auth/enums";
-import { LoggedUser } from "../../modules/auth/interfaces";
+import { LoggedUserData } from "../../modules/auth/interfaces";
 
 interface AuthSlice {
   authStatus: AuthStatus;
-  loggedUser: LoggedUser | null;
+  loggedUser: LoggedUserData | null;
   errorMessage: string;
 }
 
@@ -23,12 +23,12 @@ export const authSlice = createSlice({
       state.loggedUser = null;
       state.errorMessage = '';
     },
-    onSignIn: (state: AuthSlice, action: PayloadAction<LoggedUser>) => {
+    onSignIn: (state: AuthSlice, action: PayloadAction<LoggedUserData>) => {
       state.authStatus = AuthStatus.AUTHENTICATED;
       state.errorMessage = '';
       state.loggedUser = action.payload;
     },
-    onSignUp: (state: AuthSlice, action: PayloadAction<LoggedUser>) => {
+    onSignUp: (state: AuthSlice, action: PayloadAction<LoggedUserData>) => {
       state.authStatus = AuthStatus.AUTHENTICATED;
       state.errorMessage = '';
       state.loggedUser = action.payload;

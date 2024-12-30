@@ -1,6 +1,5 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { Document } from "mongoose";
-import { MinLength } from 'class-validator';
+import mongoose, { Document } from "mongoose";
 
 @Schema({timestamps: true, versionKey: false})
 export class User extends Document {
@@ -16,6 +15,9 @@ export class User extends Document {
 
   @Prop({ default: true })
   public isActive: boolean;
+
+  @Prop({ type: mongoose.Schema.Types.ObjectId, required: [true, 'Role is required'], ref: 'Role' })
+  role: string;
 
 }
 
