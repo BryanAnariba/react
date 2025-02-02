@@ -1,3 +1,15 @@
+import { CartItem } from "../../interfaces/guitar-app.interfaces";
+
+interface HeaderProps {
+  cart: CartItem[];
+  clearCart: () => void;
+  deleteProductFromCart: (id: number) => void;
+  increaseQuantityToProductCart: (id: number) => void;
+  decreaseQuantityToProductCart: (id: number) => void;
+  isEmpty: boolean;
+  getTotalProductsAmount: number;
+}
+
 export const Header = ({
   cart,
   clearCart,
@@ -6,7 +18,7 @@ export const Header = ({
   decreaseQuantityToProductCart,
   isEmpty,
   getTotalProductsAmount,
-}) => {
+}: HeaderProps): JSX.Element => {
 
   return (
     <header className="py-5 header">
