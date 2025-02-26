@@ -1,0 +1,34 @@
+.form, .field {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.form input[type='text'], .form select {
+    padding: 1rem;
+    background-color: transparent;
+    border: .3rem solid var(--white);
+    color: var(--white);
+    font-size: 1.8rem;
+    font-weight: 400;
+    border-radius: 1rem;
+}
+
+.field ::placeholder {
+    color: var(--white);
+}
+
+.submit {
+    background-color: var(--primary);
+    border: none;
+    font-weight: 700;
+    font-size: 1.4rem;
+    text-transform: uppercase;
+    color: var(--white);
+    cursor: pointer;
+    padding: 1rem;
+}
+
+.submit:hover {
+    opacity: 0.8;
+}
