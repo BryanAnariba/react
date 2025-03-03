@@ -1,0 +1,5 @@
+@import "tailwindcss";
+
+.header-bg {
+    background-image: url('/bg.jpg');
+}

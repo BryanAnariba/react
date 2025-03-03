@@ -5,7 +5,7 @@ import { Search } from "../../interfaces/weather.interfaces";
 import Alert from "../Alert/Alert";
 
 interface FormProps {
-  fetchWeather: () => void;
+  fetchWeather: (search: Search) => Promise<void>;
 }
 
 export default function Form({ fetchWeather }: FormProps) {
@@ -33,7 +33,7 @@ export default function Form({ fetchWeather }: FormProps) {
       setAlert("Todos los campos son obligatorios");
     } else {
       setAlert("");
-      fetchWeather();
+      fetchWeather(search);
     }
   };
 

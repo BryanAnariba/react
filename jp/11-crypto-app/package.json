@@ -1,5 +1,5 @@
 {
-  "name": "clima-app",
+  "name": "crypto-app",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -10,10 +10,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "axios": "^1.7.9",
+    "axios": "^1.8.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "zod": "^3.24.2"
+    "zod": "^3.24.2",
+    "zustand": "^5.0.3"
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",
@@ -21,7 +22,7 @@
     "@types/react-dom": "^19.0.4",
     "@vitejs/plugin-react-swc": "^3.8.0",
     "eslint": "^9.21.0",
-    "eslint-plugin-react-hooks": "^5.0.0",
+    "eslint-plugin-react-hooks": "^5.1.0",
     "eslint-plugin-react-refresh": "^0.4.19",
     "globals": "^15.15.0",
     "typescript": "~5.7.2",
