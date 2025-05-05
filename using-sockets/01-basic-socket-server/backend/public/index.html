@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <title>Mini Chat</title>
+</head>
+
+<body class="container">
+    <h1 class="mt-5">Mini Chat!</h1>
+    <hr>
+
+    <form id="chat-form">
+        <div class="row">
+            <div class="col-8">
+                <input type="text" name="" id="message-input" class="form-control" placeholder="Type your message here...">
+            </div>
+            <div class="col-4">
+                <button type="submit" class="btn btn-primary btn-block">Send</button>
+            </div>
+        </div>
+    </form>
+
+    <div class="row">
+        <div class="col">
+            <ul id="messages-list" class="mt-2">
+
+            </ul>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.8.1/socket.io.js"
+        integrity="sha512-8BHxHDLsOHx+flIrQ0DrZcea7MkHqRU5GbTHmbdzMRnAaoCIkZ97PqZcXJkKZckMMhqfoeaJE+DNUVuyoQsO3Q=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+        crossorigin="anonymous"></script>
+    <script>
+        const socket = io('http://localhost:3500/chat-messages');
+        const chatForm = document.querySelector("#chat-form");
+        const messageInput = document.querySelector("#message-input")
+        const messagesList = document.querySelector("#messages-list");
+
+        // socket.on('welcome-message', (data) => {
+        //     console.log(data);
+        // });
+
+        // setTimeout(() => {
+        //     socket.emit('client-message', {
+        //         message: 'Client!',
+        //         name: 'GOKU PEREZ',
+        //     })
+        // }, 2000);
+
+        chatForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const message = messageInput.value;
+            // console.log({message});
+            socket.emit("chat-message-from-client", { message: message });
+        });
+
+        socket.on("message-from-server", (data) => {
+            messagesList.innerHTML += `<li>${data.message}</li>`;
+            console.log(`Server sent: `, data);
+        });
+    </script>
+</body>
+
+</html>
