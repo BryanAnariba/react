@@ -1,0 +1,4 @@
+- [Socket npm](https://www.npmjs.com/package/socket.io)
+- [Nest Sockets](https://docs.nestjs.com/websockets/gateways)
+- [Nest validators](https://docs.nestjs.com/techniques/validation)
+- [UUID](https://www.npmjs.com/package/uuid)

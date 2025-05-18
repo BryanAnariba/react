@@ -32,8 +32,8 @@ export class TasksService {
   async findAll(projectId: string): Promise<Task[]> {
     try {
       const tasks = await this.taskModel
-        .find({ project: new Types.ObjectId(projectId), isActive: true })
-        .populate('project', 'projectName clientName description isActive');
+        .find({ project: new Types.ObjectId(projectId), isActive: true });
+        //.populate('project', 'projectName clientName description isActive');
       return tasks;
     } catch (error) {
       throw errorHandleExceptions(error);
@@ -43,8 +43,8 @@ export class TasksService {
   async findOne(projectId: string, taskId: string): Promise<Task> {
     try {
       const task = await this.taskModel
-        .findOne({ _id: taskId, project: new Types.ObjectId(projectId) })
-        .populate('project', 'projectName clientName description isActive');
+        .findOne({ _id: taskId, project: new Types.ObjectId(projectId) });
+        //.populate('project', 'projectName clientName description isActive');
       if (!task)
         throw new HttpException(
           'Task not found or task is not asigned to project.',

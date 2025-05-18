@@ -3,6 +3,9 @@ import { getProject } from "../services/projects.service";
 import { Navigate, useNavigate, useParams } from "react-router";
 import Loading from "../../../shared/components/Loading";
 import AddTaskModal from "../../tasks/components/AddTaskModal";
+import TaskList from "../../tasks/components/TaskList";
+import EditTaskData from "../../tasks/components/EditTaskData";
+import TaskModalDetails from "../../tasks/components/TaskModalDetails";
 
 export default function ProjectDetailsPage() {
   const navigate = useNavigate();
@@ -34,8 +37,10 @@ export default function ProjectDetailsPage() {
             Agregar
           </button>
         </nav>
-
+        <TaskList />
         <AddTaskModal />
+        <EditTaskData />
+        <TaskModalDetails />
       </>
     );
 }

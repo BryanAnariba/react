@@ -1,26 +1,51 @@
 import { Injectable } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { NewAccountDto } from '../auth/dto/new-account.dto';
+import { errorHandleExceptions } from 'src/common/exceptions/error-handle.exception';
+import { InjectModel } from '@nestjs/mongoose';
+import { User } from './schemas/user.schemas';
+import { Model } from 'mongoose';
+import { UserResponse } from './types';
 
 @Injectable()
 export class UsersService {
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+  constructor(
+    @InjectModel(User.name)
+    private readonly userModel: Model<User>,
+  ) {}
+
+  public async createFromNewAccount(
+    newAccountDto: NewAccountDto,
+  ): Promise<User> {
+    try {
+      const user = await this.userModel.create(newAccountDto);
+      return await user.save();
+    } catch (error) {
+      throw errorHandleExceptions(error);
+    }
   }
 
-  findAll() {
-    return `This action returns all users`;
+  public async findOne(userId: string): Promise<User | null> {
+    try {
+      const user = await this.userModel.findOne({ _id: userId });
+      return user;
+    } catch (error) {
+      throw errorHandleExceptions(error);
+    }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  public async confirmUserAccount(userId: string, confirmed: boolean): Promise<User> {
+    try {
+      const user = await this.userModel.findByIdAndUpdate({ _id: userId }, { confirmed: confirmed }, { new: true });
+      return user!;
+    } catch (error) {
+      throw errorHandleExceptions(error);
+    }
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  public userWithOutPwd(user: User): UserResponse {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password: _, ...userWithoutPassword } = user.toJSON();
+    return userWithoutPassword as UserResponse;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
-  }
 }

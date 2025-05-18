@@ -1,0 +1,7 @@
+export const STATUS_TRANLATIONS: { [key: string]: string } = {
+  PENDING: "PENDIENTE",
+  ON_HOLD: "EN ESPERA",
+  IN_PROGRESS: "EN PROGRESO",
+  UNDER_REVIEW: "BAJO REVISION",
+  COMPLETED: "COMPLETADO",
+};
