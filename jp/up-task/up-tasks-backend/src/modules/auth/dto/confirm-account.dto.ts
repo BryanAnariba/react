@@ -7,5 +7,5 @@ export class ConfirmAccountDto {
 
   @IsString()
   @IsNotEmpty()
-  userCode: string;
+  userId: string;
 }

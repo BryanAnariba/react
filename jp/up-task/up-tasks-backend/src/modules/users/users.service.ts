@@ -24,6 +24,15 @@ export class UsersService {
     }
   }
 
+  public async findByEmail(email: string): Promise<User | null> {
+    try {
+      const user = await this.userModel.findOne({email: email});
+      return user;
+    } catch (error) {
+      throw errorHandleExceptions(error);
+    }
+  }
+
   public async findOne(userId: string): Promise<User | null> {
     try {
       const user = await this.userModel.findOne({ _id: userId });

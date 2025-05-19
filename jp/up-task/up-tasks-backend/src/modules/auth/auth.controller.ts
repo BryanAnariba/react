@@ -3,6 +3,8 @@ import { AuthService } from './auth.service';
 import { NewAccountDto } from './dto/new-account.dto';
 import { SignInDto } from './dto/sign-in.dto';
 import { ConfirmAccountDto } from './dto/confirm-account.dto';
+import { ResendConfirmationTokenDto } from './dto/resend-confirmation-token.dto';
+import { ForgotPasswordDto } from './dto/forgot-password.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -21,5 +23,15 @@ export class AuthController {
   @Post('confirm-account')
   public onConfirmAccount(@Body() confirmAccountDto: ConfirmAccountDto) {
     return this.authService.confirmAccount(confirmAccountDto);
+  }
+
+  @Post('resend-confirmation-token')
+  public onResendConfirmationToken (@Body() resendConfirmationTokenDto: ResendConfirmationTokenDto) {
+    return this.authService.resendConfirmationToken(resendConfirmationTokenDto);
+  }
+
+  @Post('forgot-password')
+  public onForgotPassword(@Body() forgotPasswordDto: ForgotPasswordDto) {
+    return this.authService.forgotPassword(forgotPasswordDto);
   }
 }
