@@ -29,8 +29,10 @@ export type AuthResponse = {
 export type ConfirmAccountForm = {
   userId: User["_id"];
   token: CompleteToken["token"];
-}
+};
 
 export type ResendConfirmationCodeForm = Pick<User, "email">;
 
 export type ForgotPasswordForm = Pick<User, "email">;
+
+export type NewPasswordFormData = Pick<Auth, "password" | "confirmPassword">;

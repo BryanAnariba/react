@@ -19,12 +19,16 @@ import { SentMessageInfo } from 'src/common/types/mail-services.types';
 import { ConfirmAccountDto } from './dto/confirm-account.dto';
 import { ResendConfirmationTokenDto } from './dto/resend-confirmation-token.dto';
 import { ForgotPasswordDto } from './dto/forgot-password.dto';
+import { UpdatePasswordDto } from './dto/update-password.dto';
+import { User } from '../users/schemas/user.schemas';
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectModel(AuthToken.name)
     private readonly authTokenModel: Model<AuthToken>,
+    @InjectModel(User.name)
+    private readonly userModel: Model<User>,
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
     private readonly mailService: MailService,
@@ -164,7 +168,7 @@ export class AuthService {
       let info: SentMessageInfo | null = null;
       if (tokenSaved) {
         info = await this.mailService.sendEmailData({
-          from: `UpTasks <${process.env.MAIL_USER}>`,
+          from: `UpTasks <${process.env.GMAIL_USER}>`,
           to: user.email,
           subject: 'UpTasks - Verificación/Confirmacion de cuenta',
           text: `UpTasks - Confirma tu cuenta`,
@@ -227,6 +231,50 @@ export class AuthService {
         user: { _id: user._id as string, email: user.email, name: user.name },
         emailSent: info ? true : false,
       };
+    } catch (error) {
+      throw errorHandleExceptions(error);
+    }
+  }
+
+  public async validateToken(confirmAccountDto: ConfirmAccountDto) {
+    try {
+      const token = await this.authTokenModel.findOne({
+        token: confirmAccountDto.token,
+        userId: new Types.ObjectId(confirmAccountDto.userId),
+      });
+      if (!token) throw new BadRequestException(`Token was not found!`);
+
+      return {
+        message: `Valid token, you can change the password!`,
+      };
+    } catch (error) {
+      throw errorHandleExceptions(error);
+    }
+  }
+
+  public async updatePasswordWithToken(
+    tokenCode: string,
+    updatePasswordDto: UpdatePasswordDto,
+  ) {
+    try {
+      const token = await this.authTokenModel.findOne({
+        token: tokenCode,
+        userId: new Types.ObjectId(updatePasswordDto.userId),
+      });
+      if (!token) throw new BadRequestException(`Token was not found!`);
+
+      const user = await this.usersService.findOne(token.userId);
+      if (!user) throw new BadRequestException(`User was not found!`);
+
+      await Promise.allSettled([
+        this.userModel.updateOne(
+          { _id: new Types.ObjectId(updatePasswordDto.userId) },
+          { password: hashParam(updatePasswordDto.password) },
+          { new: true },
+        ),
+        token.deleteOne(),
+      ]);
+      return { message: 'User password change successfully!' };
     } catch (error) {
       throw errorHandleExceptions(error);
     }

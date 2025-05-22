@@ -40,7 +40,7 @@ export default function UpTaskRouter() {
             path="/auth/forgot-password"
             element={<ForgotPasswordPage />}
           />
-          <Route path="/auth/new-password" element={<NewPasswordTokenPage />} />
+          <Route path="/auth/new-password/:userId" element={<NewPasswordTokenPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

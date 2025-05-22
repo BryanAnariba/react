@@ -1,10 +1,11 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Param, ParseIntPipe, Post } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { NewAccountDto } from './dto/new-account.dto';
 import { SignInDto } from './dto/sign-in.dto';
 import { ConfirmAccountDto } from './dto/confirm-account.dto';
 import { ResendConfirmationTokenDto } from './dto/resend-confirmation-token.dto';
 import { ForgotPasswordDto } from './dto/forgot-password.dto';
+import { UpdatePasswordDto } from './dto/update-password.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -34,4 +35,16 @@ export class AuthController {
   public onForgotPassword(@Body() forgotPasswordDto: ForgotPasswordDto) {
     return this.authService.forgotPassword(forgotPasswordDto);
   }
+
+
+  @Post('validate-code-reset-password')
+  public onValidateAccountResetPassword(@Body() confirmAccountDto: ConfirmAccountDto) {
+    return this.authService.validateToken(confirmAccountDto);
+  }
+
+  @Post('update-user-password/:token')
+  public onUpdatePassword(@Param('token', ParseIntPipe) token: string, @Body() updatePasswordDto: UpdatePasswordDto) {
+    return this.authService.updatePasswordWithToken(token, updatePasswordDto)
+  }
+
 }

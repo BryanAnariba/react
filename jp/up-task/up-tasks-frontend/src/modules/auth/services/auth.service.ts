@@ -2,6 +2,8 @@ import { isAxiosError } from "axios";
 import {
   AuthResponse,
   ConfirmAccountForm,
+  ForgotPasswordForm,
+  NewPasswordFormData,
   ResendConfirmationCodeForm,
   UserNewAccountForm,
   UserSignInForm,
@@ -67,6 +69,66 @@ export async function resendConfirmationCode(
     const { data } = await api.post<Pick<AuthResponse, "user" | "emailSent">>(
       `auth/resend-confirmation-token`,
       resendConfirmationCodeForm
+    );
+    return data;
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response.data["message"]);
+    }
+    throw new Error(`${error}`);
+  }
+}
+
+export async function forgotPassword(
+  forgotPasswordForm: ForgotPasswordForm
+): Promise<Pick<AuthResponse, "user" | "emailSent">> {
+  try {
+    const { data } = await api.post<Pick<AuthResponse, "user" | "emailSent">>(
+      `/auth/forgot-password`,
+      forgotPasswordForm
+    );
+    return data;
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response.data["message"]);
+    }
+    throw new Error(`${error}`);
+  }
+}
+
+export async function validateToken(
+  confirmAccountForm: ConfirmAccountForm
+): Promise<{ message: string }> {
+  try {
+    const { data } = await api.post<{ message: string }>(
+      `/auth/validate-code-reset-password`,
+      confirmAccountForm
+    );
+    return data;
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response.data["message"]);
+    }
+    throw new Error(`${error}`);
+  }
+}
+
+export async function updatePasswordWithToken({
+  newPasswordFormData,
+  token,
+  userId,
+}: {
+  newPasswordFormData: NewPasswordFormData;
+  userId: ConfirmAccountForm["userId"];
+  token: ConfirmAccountForm["token"];
+}): Promise<{ message: string }> {
+  try {
+    const { data } = await api.post<{ message: string }>(
+      `/auth/update-user-password/${token}`,
+      {
+        ...newPasswordFormData,
+        userId: userId,
+      }
     );
     return data;
   } catch (error) {
