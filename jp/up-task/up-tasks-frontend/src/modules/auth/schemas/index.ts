@@ -7,3 +7,12 @@ export const AuthSchema = z.object({
   confirmPassword: z.string(),
   token: z.string(),
 });
+
+export const UserSchema = z.object({
+  user: AuthSchema.pick({
+    name: true,
+    email: true,
+  }).extend({
+    _id: z.string(),
+  }),
+});

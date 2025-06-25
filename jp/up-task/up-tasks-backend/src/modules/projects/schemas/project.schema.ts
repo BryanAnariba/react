@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Document, Types } from 'mongoose';
 
 @Schema({ versionKey: false, timestamps: true })
 export class Project extends Document {
@@ -26,6 +26,13 @@ export class Project extends Document {
 
   @Prop({ type: Boolean, default: true })
   public isActive: boolean;
+
+  @Prop({
+    type: Types.ObjectId,
+    ref: 'User',
+    required: [true, 'User is required'],
+  })
+  public manager: string;
 }
 
 export const ProjectSchema = SchemaFactory.createForClass(Project);

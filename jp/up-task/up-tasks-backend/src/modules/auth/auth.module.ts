@@ -5,15 +5,16 @@ import { UsersModule } from '../users/users.module';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { JwtStratey } from './strategies/jwt.strategy';
+import { JwtStrategy } from './strategies/jwt.strategy';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AuthToken, AuthTokenSchema } from './schemas/auth-token.schema';
 import { CommonModule } from 'src/common/common.module';
 
 @Module({
   imports: [
-    UsersModule,
     ConfigModule,
+    CommonModule,
+    UsersModule,
     MongooseModule.forFeature([
       { name: AuthToken.name, schema: AuthTokenSchema },
     ]),
@@ -28,10 +29,9 @@ import { CommonModule } from 'src/common/common.module';
         },
       }),
     }),
-    CommonModule,
   ],
   controllers: [AuthController],
-  providers: [AuthService, JwtStratey], // anexar la estrategia JWT si usas passport
-  exports: [PassportModule, JwtModule, JwtStratey, AuthService],
+  providers: [AuthService, JwtStrategy], // anexar la estrategia JWT si usas passport
+  exports: [PassportModule, JwtModule, JwtStrategy, AuthService],
 })
 export class AuthModule {}

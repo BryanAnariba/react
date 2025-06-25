@@ -3,6 +3,7 @@ import {
   AuthResponse,
   ConfirmAccountForm,
   ForgotPasswordForm,
+  LoggedUser,
   NewPasswordFormData,
   ResendConfirmationCodeForm,
   UserNewAccountForm,
@@ -137,4 +138,20 @@ export async function updatePasswordWithToken({
     }
     throw new Error(`${error}`);
   }
+}
+
+export async function getUserProfile () {
+  try {
+    const { data }  = await api.get<LoggedUser>("/auth/user-profile");
+    return data;
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response.data["message"]);
+    }
+    throw new Error(`${error}`);
+  }
+}
+
+export function setAccessToken(token: string): void {
+  localStorage.setItem("up-tasks-access-token", token);
 }

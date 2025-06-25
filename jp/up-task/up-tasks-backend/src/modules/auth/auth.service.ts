@@ -109,6 +109,7 @@ export class AuthService {
           _id: user._id as string,
           email: user.email,
           name: user.name,
+          roles: user.roles,
         }),
       };
     } catch (error) {
@@ -278,6 +279,16 @@ export class AuthService {
     } catch (error) {
       throw errorHandleExceptions(error);
     }
+  }
+
+  public getUserProfile(user: User): Pick<AuthResponse, 'user'> {
+    return {
+      user: {
+        _id: user._id as string,
+        email: user.email,
+        name: user.name,
+      },
+    };
   }
 
   public setJwt(payload: JwtPayload): string {

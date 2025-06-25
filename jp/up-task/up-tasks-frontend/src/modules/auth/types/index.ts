@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { AuthSchema } from "../schemas";
+import { AuthSchema, UserSchema } from "../schemas";
 
 export type Auth = z.infer<typeof AuthSchema>;
 
@@ -36,3 +36,5 @@ export type ResendConfirmationCodeForm = Pick<User, "email">;
 export type ForgotPasswordForm = Pick<User, "email">;
 
 export type NewPasswordFormData = Pick<Auth, "password" | "confirmPassword">;
+
+export type LoggedUser = z.infer<typeof UserSchema>;

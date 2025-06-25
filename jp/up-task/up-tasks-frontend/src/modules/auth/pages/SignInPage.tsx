@@ -1,29 +1,33 @@
 import { useForm } from "react-hook-form";
-import ErrorMessage from "../../../shared/components/ErrorMessage";
 import { UserSignInForm } from "../types";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useMutation } from "@tanstack/react-query";
-import { signIn } from "../services/auth.service";
+import { setAccessToken, signIn } from "../services/auth.service";
 import { toast } from "react-toastify";
+import ErrorMessage from "../../../shared/components/ErrorMessage";
 
 export default function LoginPage() {
+  const navigate = useNavigate();
   const initialValues: UserSignInForm = {
     email: "",
     password: "",
   };
+
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
   } = useForm({ defaultValues: initialValues });
+
   const { mutate } = useMutation({
     mutationFn: signIn,
     onError: (error) => {
       toast.error(error.message);
     },
     onSuccess: (data) => {
-      toast.success(`Bienvenido ${data.user.name}, token: ${data.token}`);
+      setAccessToken(data.token);
+      navigate("/");
     },
   });
 

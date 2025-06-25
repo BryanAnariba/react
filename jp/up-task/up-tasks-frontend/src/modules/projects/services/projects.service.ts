@@ -18,6 +18,7 @@ export async function createProject(
 }
 
 export async function getProjects() {
+  
   try {
     const { data } = await api.get("/projects");
     const response = ProjectsResponseSchema.safeParse(data);
